@@ -21,11 +21,11 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/h2-console/**",
-                                "/users/signup",
-                                "/users/login"
+                                "/api/users/signup",
+                                "/api/users/login"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
-                        .requestMatchers("/api/posts/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/restaurants/**").permitAll()
+                        .requestMatchers("/api/restaurants/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form.permitAll())
@@ -34,7 +34,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // UserService에서 비밀번호 암호화할 때 쓰던 녀석이 바로 여기 정의된 빈(Bean)이야!
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
