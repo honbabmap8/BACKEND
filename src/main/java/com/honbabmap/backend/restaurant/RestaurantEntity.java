@@ -47,5 +47,4 @@ public class RestaurantEntity {
     @CreationTimestamp // INSERT 시 자동으로 현재 시간 기록
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
 }
