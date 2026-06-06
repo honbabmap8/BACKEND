@@ -1,6 +1,8 @@
 package com.honbabmap.backend.user;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
@@ -22,6 +24,7 @@ public class UserEntity {
     private String loginId;
 
     @Column(name = "login_pw", nullable = false)
+    @NotBlank
     private String password; // 암호화된 문자열 저장을 위해 String 선언
 
     @Column(nullable = false, length = 20)

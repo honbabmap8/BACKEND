@@ -1,6 +1,9 @@
 package com.honbabmap.backend.user;
 
+import com.honbabmap.backend.user.dto.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,28 +18,21 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/signup")
-    public String signup(@RequestBody Map<String, String> request) {
+    public ResponseEntity<SignupResponse> signUp(@Valid @RequestBody SignupRequest request) {
+        UserEntity savedUser = userService.signup(request.getId(), request.getPassword(), request.getNickname());
 
-        userService.signup(
-                request.get("loginId"),
-                request.get("password"),
-                request.get("nickname")
-        );
+        SignupResponse response = new SignupResponse("회원가입이 성공적으로 완료되었습니다.",
+                        savedUser.getId(), savedUser.getNickname());
 
-        return "회원가입이 성공적으로 완료되었습니다";
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> request) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
 
-        // 서비스에서 만든 회원 정보와 토큰이 담긴 Map을 받아옵니다.
-        Map<String, Object> response = userService.login(
-                request.get("loginId"),
-                request.get("password")
-        );
+        LoginResponse response = userService.login(request.getId(), request.getPassword());
 
-        // ResponseEntity로 감싸서 예쁜 JSON으로 리턴해줍니다.
         return ResponseEntity.ok(response);
     }
 }
