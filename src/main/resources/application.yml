@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:honbabmap;DB_CLOSE_DELAY=-1
+    username: admin
+    password: 1234
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console # 접속 경로 url 지정
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create       # create # 서버를 생성할 때마다 테이블 생성
+      # update: 엔티티에 맞춰 테이블 업데이트, 기존 데이터는 삭제 안 함.
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        show_sql: true
+
+server:
+  port: 8080 # default port
