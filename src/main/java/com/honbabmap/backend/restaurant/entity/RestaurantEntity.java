@@ -1,4 +1,4 @@
-package com.honbabmap.backend.restaurant;
+package com.honbabmap.backend.restaurant.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

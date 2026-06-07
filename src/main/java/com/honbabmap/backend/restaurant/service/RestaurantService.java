@@ -1,9 +1,8 @@
-package com.honbabmap.backend.restaurant;
+package com.honbabmap.backend.restaurant.service;
 
+import com.honbabmap.backend.restaurant.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
