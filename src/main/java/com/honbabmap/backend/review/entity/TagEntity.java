@@ -1,5 +1,5 @@
 // 사용자가 후기를 작성할 때 후기 태그에 대한 entity 클래스
-package com.honbabmap.backend.restaurant.entity;
+package com.honbabmap.backend.review.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -36,13 +36,14 @@ public class RestaurantEntity {
     private String menu;
 
     @Column(name = "rest_level") // ERD의 혼밥난이도(1~5)
-    private int level;
+    private int restLevel;
 
     @Column(name = "rest_distance") // ERD의 역과의 거리
     private double distance;
 
-    @Column(name = "station_id") // ERD의 지하철역 고유 ID
-    private int stationId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "station_id") // ERD의 지하철역 테이블과 1:N 관계
+    private StationEntity station;
 
     @CreationTimestamp // INSERT 시 자동으로 현재 시간 기록
     @Column(name = "created_at", nullable = false, updatable = false)
