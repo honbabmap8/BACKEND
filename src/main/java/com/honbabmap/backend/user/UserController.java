@@ -19,10 +19,10 @@ public class UserController {
     // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<SignupResponse> signUp(@Valid @RequestBody SignupRequest request) {
-        UserEntity savedUser = userService.signup(request.getId(), request.getPassword(), request.getNickname());
+        UserEntity savedUser = userService.signup(request.getLoginId(), request.getPassword(), request.getNickname());
 
         SignupResponse response = new SignupResponse("회원가입이 성공적으로 완료되었습니다.",
-                        savedUser.getId(), savedUser.getNickname());
+                        savedUser.getUserId(), savedUser.getNickname());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -31,7 +31,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
 
-        LoginResponse response = userService.login(request.getId(), request.getPassword());
+        LoginResponse response = userService.login(request.getLoginId(), request.getPassword());
 
         return ResponseEntity.ok(response);
     }
