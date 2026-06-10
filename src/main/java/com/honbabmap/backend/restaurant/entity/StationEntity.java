@@ -11,7 +11,7 @@ import lombok.Setter;
 public class StationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "station_id") // ERD의 식당 고유 ID
+    @Column(name = "station_id") // ERD의 지하철역 고유 ID
     private Integer stationId;
 
     @Column(name = "station_name") // ERD의 지하철역 이름

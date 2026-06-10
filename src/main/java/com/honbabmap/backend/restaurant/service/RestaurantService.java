@@ -20,8 +20,8 @@ public class RestaurantService {
     // Repository
     private final RestaurantRepository restaurantRepository;
     private final StationRepository stationRepository;
-    private final ReviewRepository reviewRepository;
-    private final ReviewTagRepository reviewTagRepository;
+    //private final ReviewRepository reviewRepository;
+   // private final ReviewTagRepository reviewTagRepository;
 
     public RestaurantListResponse getRestaurantListByStation(Integer stationId, Integer honbabLevel) {
         Optional<StationEntity> stationEntityOptional = stationRepository.findById(stationId);
@@ -31,7 +31,7 @@ public class RestaurantService {
         }
         StationEntity station = stationEntityOptional.get(); // 지하철역 테이블에 존재하는 지하철역임.
 
-        List<RestaurantEntity> restaurantEntityList = restaurantRepository.findAllByStationId(station.getStationId());
+        List<RestaurantEntity> restaurantEntityList = restaurantRepository.findAllByStationStationId(station.getStationId());
         // stationId에 해당하는 레스토랑 리스트를 가져옴.
 
         List<RestaurantListResponse.Restaurant> restaurantListForDto = new ArrayList<>();
