@@ -12,11 +12,11 @@ public class ReviewTagEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_tag_id")
-    private Long id;
+    private Integer reviewTagId;
 
     @Column(name = "review_id")
-    private Long reviewId;
+    private Integer reviewId;
 
     @Column(name = "tag_id")
-    private Long tagId;
+    private Integer tagId;
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReviewTagRepository extends JpaRepository<ReviewTagEntity, Long> {
-    List<ReviewTagEntity> findAllByReviewRestaurantId(Long restaurantId);
+public interface ReviewTagRepository extends JpaRepository<ReviewTagEntity, Integer> {
+    List<ReviewTagEntity> findAllByReviewRestaurantId(Integer restaurantId);
     // SQL의 SELECT * FROM review_tag WHERE rest_id = ?; 역할
 }

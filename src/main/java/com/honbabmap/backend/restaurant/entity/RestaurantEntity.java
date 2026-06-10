@@ -15,19 +15,19 @@ public class RestaurantEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rest_id") // ERD의 식당 고유 ID
-    private Long id;
+    private Integer restaurantId;
 
     @Column(name = "rest_name") // ERD의 식당 이름
-    private String name;
+    private String restaurantName;
 
     @Column(name = "rest_detail") // ERD의 식당 한줄소개
-    private String detail;
+    private String restaurantDetail;
 
     @Column(name = "rest_lat") // ERD의 식당 위치 위도
-    private double lat;
+    private double restaurantLat;
 
     @Column(name = "rest_lng") // ERD의 식당 위치 경도
-    private double lng;
+    private double restaurantLng;
 
     @Column(name = "image_url") // ERD의 대표 이미지 url
     private String img;

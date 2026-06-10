@@ -12,14 +12,14 @@ public class RestFeatEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rest_feat_id")
-    private Long id;
+    private Long restFeatId;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rest_id")
-    private RestaurantEntity restaurant;
+    private RestaurantEntity restaurantId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "feat_id")
-    private FeatureEntity feature;
+    private FeatureEntity featureId;
 }

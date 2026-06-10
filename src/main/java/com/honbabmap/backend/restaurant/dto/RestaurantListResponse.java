@@ -24,10 +24,10 @@ public class RestaurantListResponse {
     @Builder
     @AllArgsConstructor
     public static class Restaurant {
-        private Long restaurantId;
-        private String name; // 식당 이름
+        private Integer restaurantId;
+        private String restaurantName; // 식당 이름
         private String imageUrl;
-        private int restLevel;
+        private Integer restLevel;
         private String representativeMenu;
 
         private LocationInfo locationInfo;
@@ -37,16 +37,16 @@ public class RestaurantListResponse {
     @Getter
     @AllArgsConstructor
     public static class RestReviewTag { // 리뷰태그 클래스
-        private Long tagId;
+        private Integer tagId;
         private String tagName;
     }
 
     @Getter
     @AllArgsConstructor
     public static class LocationInfo {
-        private Long stationId;
+        private Integer stationId;
         private String stationName;
         private double distance;
-        private int time;
+        private Integer time;
     }
 }

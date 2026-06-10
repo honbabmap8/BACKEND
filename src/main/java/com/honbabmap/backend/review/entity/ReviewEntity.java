@@ -12,7 +12,7 @@ public class ReviewEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
-    private Long id;
+    private Integer reviewId;
 
     @Column(name = "user_id")
     private String loginId;

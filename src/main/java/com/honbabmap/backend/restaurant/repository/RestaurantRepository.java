@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RestaurantRepository extends JpaRepository<RestaurantEntity, Long> {
-    List<RestaurantEntity> findAllByStationId(Long stationId);
+public interface RestaurantRepository extends JpaRepository<RestaurantEntity, Integer> {
+    List<RestaurantEntity> findAllByStationId(Integer stationId);
     // SQL의 SELECT * FROM restaurants WHERE station_id = ?; 역할
 }
