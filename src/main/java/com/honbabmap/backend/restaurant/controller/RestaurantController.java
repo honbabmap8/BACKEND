@@ -1,5 +1,6 @@
 package com.honbabmap.backend.restaurant.controller;
 
+import com.honbabmap.backend.restaurant.dto.RestaurantDetailResponse;
 import com.honbabmap.backend.restaurant.dto.RestaurantListResponse;
 import com.honbabmap.backend.restaurant.service.RestaurantService;
 import lombok.Getter;
@@ -20,6 +21,15 @@ public class RestaurantController {
     (@PathVariable Integer stationId, @RequestParam Integer honbabLevel) {
         RestaurantListResponse response
                 = restaurantService.getRestaurantListByStation(stationId, honbabLevel);
+        return ResponseEntity.ok(response);
+    }
+
+    // 식당 상세 정보 조회
+    @GetMapping("/{restaurantId}")
+    public ResponseEntity<RestaurantDetailResponse> restaurantDetailByRestaurant
+            (@PathVariable Integer restaurantId) {
+        RestaurantDetailResponse response
+                =restaurantService.getRestaurantDetail(restaurantId);
         return ResponseEntity.ok(response);
     }
 }
