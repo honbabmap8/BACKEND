@@ -27,7 +27,7 @@ public class RestaurantListResponse {
         private Integer restaurantId;
         private String restaurantName; // 식당 이름
         private String imageUrl;
-        private Integer restLevel;
+        private Integer restSoloLevel;
         private String representativeMenu;
 
         private LocationInfo locationInfo;

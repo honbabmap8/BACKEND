@@ -36,7 +36,7 @@ public class RestaurantEntity {
     private String menu;
 
     @Column(name = "rest_level") // ERD의 혼밥난이도(1~5)
-    private int restLevel;
+    private int restSoloLevel;
 
     @Column(name = "rest_distance") // ERD의 역과의 거리(단위 m)
     private double distance;

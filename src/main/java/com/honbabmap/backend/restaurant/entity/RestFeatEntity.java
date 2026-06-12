@@ -12,8 +12,7 @@ public class RestFeatEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rest_feat_id")
-    private Long restFeatId;
-
+    private Integer restFeatId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rest_id")

@@ -40,7 +40,7 @@ public class RestaurantService {
 
         for (RestaurantEntity restaurant : restaurantEntityList) {
             // 사용자 레벨과 같거나 하위 레벨만 조회할 것.
-            if (honbabLevel < restaurant.getRestLevel())
+            if (honbabLevel < restaurant.getRestSoloLevel())
                 continue;
 
             // locationInfo
@@ -60,7 +60,7 @@ public class RestaurantService {
                     .restaurantId(restaurant.getRestaurantId())
                     .restaurantName(restaurant.getRestaurantName())
                     .imageUrl(restaurant.getImg())
-                    .restLevel(restaurant.getRestLevel())
+                    .restSoloLevel(restaurant.getRestSoloLevel())
                     .representativeMenu(restaurant.getMenu())
                     .locationInfo(locationInfo)
                     .restReviewTagList(restReviewTagList).build();
@@ -107,7 +107,7 @@ public class RestaurantService {
                 .restaurantId(restaurant.getRestaurantId())
                 .restaurantName(restaurant.getRestaurantName())
                 .imageUrl(restaurant.getImg())
-                .restLevel(restaurant.getRestLevel())
+                .restSoloLevel(restaurant.getRestSoloLevel())
                 .representativeMenu(restaurant.getMenu())
                 .restaurantDetail(restaurant.getRestaurantDetail())
                 .locationInfo(locationInfo)
