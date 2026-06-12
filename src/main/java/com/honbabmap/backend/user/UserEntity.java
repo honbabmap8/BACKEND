@@ -18,7 +18,7 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id") // ERD의 고객 고유 ID
-    private Integer userId; // Auto Increment를 위해 Long 타입 사용
+    private Integer userId;
 
     @Column(name = "login_id", nullable = false, unique = true, length = 50)
     private String loginId;
