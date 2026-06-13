@@ -8,4 +8,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByLoginId(String loginId);
     // loginId로 사용자를 조회할 때 사용.
+
+    Optional<UserEntity> findByUserId(Integer userId);
+
 }
