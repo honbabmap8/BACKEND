@@ -33,6 +33,9 @@ public class UserEntity {
     @Column(name = "user_level", nullable = false)
     private Integer honbabLevel;
 
+    public void updateHonbabLevel(Integer honbabLevel){
+        this.honbabLevel = honbabLevel; }
+
     @CreationTimestamp // INSERT 시 자동으로 현재 시간 기록
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
