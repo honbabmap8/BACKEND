@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,10 +21,12 @@ public class EatbtiController {
     @PostMapping
     public ResponseEntity<Map<String, Object>> submitEatbti(@RequestBody EatbtiRequest request) {
 
+        List<Integer> answers = request.getAnswers();
+
         // JWT 필터 연동 전까지 통신 테스트를 위해 임시 아이디를 강제로 고정
         int userId = 1;
 
-        EatbtiResponse.Submit submitResult = eatbtiService.submitEatbti(userId, request);
+        EatbtiResponse.Submit submitResult = eatbtiService.submitEatbti(userId, answers);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "EatBTI 검사 결과가 성공적으로 반영되었습니다.");

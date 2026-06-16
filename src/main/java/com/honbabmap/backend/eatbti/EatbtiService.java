@@ -19,8 +19,7 @@ public class EatbtiService {
 
     // 1. EatBTI 검사 결과 계산 및 저장 (POST)
     @Transactional
-    public EatbtiResponse.Submit submitEatbti(int userId, EatbtiRequest request) {
-        List<Integer> answers = request.getAnswers();
+    public EatbtiResponse.Submit submitEatbti(int userId,  List<Integer> answers) {
 
         int score1 = answers.get(0);
         int score2 = answers.get(1);
@@ -30,7 +29,6 @@ public class EatbtiService {
 
         double totalScore = score1 + score2 + (score3 * 1.5) + score4 + score5;
         int honbabLevel = determineLevel(totalScore);
-
 
         EatbtiEntity eatbtiEntity = EatbtiEntity.builder()
                 .userId(userId)
