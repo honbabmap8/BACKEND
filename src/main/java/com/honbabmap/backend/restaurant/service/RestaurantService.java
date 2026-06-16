@@ -7,8 +7,10 @@ import com.honbabmap.backend.restaurant.entity.RestFeatEntity;
 import com.honbabmap.backend.restaurant.entity.RestaurantEntity;
 import com.honbabmap.backend.restaurant.entity.StationEntity;
 import com.honbabmap.backend.restaurant.repository.*;
-//import com.honbabmap.backend.review.repository.ReviewRepository;
-//import com.honbabmap.backend.review.repository.ReviewTagRepository;
+
+import com.honbabmap.backend.review.repository.ReviewRepository;
+import com.honbabmap.backend.review.repository.ReviewTagRepository;
+import com.honbabmap.backend.review.entity.ReviewTagEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +26,8 @@ public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final StationRepository stationRepository;
     private final RestFeatRepository restFeatRepository;
-    // private final ReviewRepository reviewRepository;
-    // private final ReviewTagRepository reviewTagRepository;
+    private final ReviewRepository reviewRepository;
+    private final ReviewTagRepository reviewTagRepository;
 
     public RestaurantListResponse getRestaurantListByStation(Integer stationId, Integer honbabLevel) {
         Optional<StationEntity> stationEntityOptional = stationRepository.findById(stationId);
@@ -130,6 +132,6 @@ public class RestaurantService {
     }
 
     public List<FeatureEntity> getTop4SelectedReviewTag(Integer restaurantId) {
-
+            Optional<ReviewTagEntity> reviewTagEntityOptional =
     }
 }
