@@ -2,19 +2,22 @@
 package com.honbabmap.backend.review.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Table(name="tags")
+
 public class TagEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tag_id") // ERD의 후기태그 고유 ID
+    @Column(name = "tag_id", nullable = false) // ERD의 후기태그 고유 ID
     private Integer tagId;
 
-    @Column(name = "tag_name") // ERD의 후기태그 이름
+    @Column(name = "tag_name", nullable = false) // ERD의 후기태그 이름
     private String tagName;
 }
