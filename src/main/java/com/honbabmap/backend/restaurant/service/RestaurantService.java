@@ -2,6 +2,7 @@ package com.honbabmap.backend.restaurant.service;
 
 import com.honbabmap.backend.restaurant.dto.RestaurantDetailResponse;
 import com.honbabmap.backend.restaurant.dto.RestaurantListResponse;
+import com.honbabmap.backend.restaurant.entity.FeatureEntity;
 import com.honbabmap.backend.restaurant.entity.RestFeatEntity;
 import com.honbabmap.backend.restaurant.entity.RestaurantEntity;
 import com.honbabmap.backend.restaurant.entity.StationEntity;
@@ -126,5 +127,9 @@ public class RestaurantService {
         RestaurantDetailResponse response = new RestaurantDetailResponse("식당 상세 정보 조회에 성공했습니다.", restaurantData);
 
         return response;
+    }
+
+    public List<FeatureEntity> getTop4SelectedReviewTag(Integer restaurantId) {
+
     }
 }
