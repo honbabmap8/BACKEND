@@ -7,6 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SignupResponse {
     private String message;
-    private Long userId;
+    private Integer userId;
     private String nickname;
 }

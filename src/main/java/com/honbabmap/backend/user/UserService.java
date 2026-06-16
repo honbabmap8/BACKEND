@@ -53,7 +53,7 @@ public class UserService {
         String accessToken = "dummy-jwt-access-token-xyz";
 
         LoginResponse response = new LoginResponse("로그인에 성공했습니다.",
-                accessToken, user.getId(), user.getNickname(), user.getHonbabLevel());
+                accessToken, user.getUserId(), user.getNickname(), user.getHonbabLevel());
 
         return response;
     }

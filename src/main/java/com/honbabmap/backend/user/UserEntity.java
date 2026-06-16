@@ -18,7 +18,7 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id") // ERD의 고객 고유 ID
-    private Long id; // Auto Increment를 위해 Long 타입 사용
+    private Integer userId;
 
     @Column(name = "login_id", nullable = false, unique = true, length = 50)
     private String loginId;
@@ -32,6 +32,9 @@ public class UserEntity {
 
     @Column(name = "user_level", nullable = false)
     private Integer honbabLevel;
+
+    public void updateHonbabLevel(Integer honbabLevel){
+        this.honbabLevel = honbabLevel; }
 
     @CreationTimestamp // INSERT 시 자동으로 현재 시간 기록
     @Column(name = "created_at", nullable = false, updatable = false)
