@@ -20,10 +20,10 @@ public class ReviewEntity {
     private Integer reviewId;
 
     @Column(name = "user_id", nullable = false)
-    private String loginId;
+    private Integer userId;
 
     @Column(name = "rest_id", nullable = false)
-    private String restaurantId;
+    private Integer restaurantId;
 
     @Column(name = "isBookmarked", nullable = false)
     private boolean isBookmarked;

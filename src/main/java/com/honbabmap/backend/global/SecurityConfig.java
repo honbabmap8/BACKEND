@@ -14,7 +14,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // JWT 쓸 거니까 CSRF는 꺼둠.
+                .csrf(csrf -> csrf.disable()) // JWT 쓸 거니까 CSRF는 꺼둠
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())) // H2 콘솔 깨짐 방지
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
@@ -24,8 +24,8 @@ public class SecurityConfig {
                                 "/api/users/signup",
                                 "/api/users/login"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/restaurants/**").permitAll()
-                        .requestMatchers("/api/restaurants/**").authenticated()
+                        // 리뷰 작성을 테스트하기 위해 식당 관련 모든 요청(POST 포함)의 보안 문 개방
+                        .requestMatchers("/api/restaurants/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form.permitAll())

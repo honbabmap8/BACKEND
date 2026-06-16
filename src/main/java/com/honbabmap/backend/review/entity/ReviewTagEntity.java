@@ -1,13 +1,16 @@
 package com.honbabmap.backend.review.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Table(name = "reviews_tags")
+
 public class ReviewTagEntity {
 
     @Id
