@@ -13,7 +13,7 @@ public class FeatureEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "feature_id") // ERD의 특징태그 고유 ID
-    private Long featureId;
+    private Integer featureId;
 
     @Column(name = "feature_name") // ERD의 특징태그 이름
     private String featureName;

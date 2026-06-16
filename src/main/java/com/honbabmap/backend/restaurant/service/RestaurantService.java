@@ -2,6 +2,7 @@ package com.honbabmap.backend.restaurant.service;
 
 import com.honbabmap.backend.restaurant.dto.RestaurantDetailResponse;
 import com.honbabmap.backend.restaurant.dto.RestaurantListResponse;
+import com.honbabmap.backend.restaurant.entity.RestFeatEntity;
 import com.honbabmap.backend.restaurant.entity.RestaurantEntity;
 import com.honbabmap.backend.restaurant.entity.StationEntity;
 import com.honbabmap.backend.restaurant.repository.*;
@@ -21,6 +22,7 @@ public class RestaurantService {
     // Repository
     private final RestaurantRepository restaurantRepository;
     private final StationRepository stationRepository;
+    private final RestFeatRepository restFeatRepository;
     // private final ReviewRepository reviewRepository;
     // private final ReviewTagRepository reviewTagRepository;
 
@@ -97,10 +99,16 @@ public class RestaurantService {
         restReviewTagList.add(reviewTag);
         restReviewTagList.add(reviewTag);
 
-        RestaurantDetailResponse.RestFeatTag featTag = new RestaurantDetailResponse.RestFeatTag(1, "임시 특징 태그");
+        List<RestFeatEntity> restFeat = restFeatRepository.findByRestaurantId_RestaurantId(restaurantId);
+
+        RestaurantDetailResponse.RestFeatTag featTag;
         List<RestaurantDetailResponse.RestFeatTag> featTagList = new ArrayList<>();
-        featTagList.add(featTag);
-        featTagList.add(featTag);
+
+        for(int i = 0; i < 2; i++) {
+            featTag = new RestaurantDetailResponse.RestFeatTag
+                    (restFeat.get(i).getFeatureId().getFeatureId(), restFeat.get(i).getFeatureId().getFeatureName());
+            featTagList.add(featTag);
+        }
 
         RestaurantDetailResponse.RestaurantData restaurantData = RestaurantDetailResponse.RestaurantData
                 .builder()
