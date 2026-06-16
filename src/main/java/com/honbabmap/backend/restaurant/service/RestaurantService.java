@@ -5,16 +5,18 @@ import com.honbabmap.backend.restaurant.dto.RestaurantListResponse;
 import com.honbabmap.backend.restaurant.entity.RestFeatEntity;
 import com.honbabmap.backend.restaurant.entity.RestaurantEntity;
 import com.honbabmap.backend.restaurant.entity.StationEntity;
-import com.honbabmap.backend.restaurant.repository.*;
-//import com.honbabmap.backend.review.repository.ReviewRepository;
-//import com.honbabmap.backend.review.repository.ReviewTagRepository;
+import com.honbabmap.backend.restaurant.repository.RestFeatRepository;
+import com.honbabmap.backend.restaurant.repository.RestaurantRepository;
+import com.honbabmap.backend.restaurant.repository.StationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+//import com.honbabmap.backend.review.repository.ReviewRepository;
+//import com.honbabmap.backend.review.repository.ReviewTagRepository;
 
 @Service
 @RequiredArgsConstructor
