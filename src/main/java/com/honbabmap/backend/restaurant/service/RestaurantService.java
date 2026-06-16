@@ -97,15 +97,15 @@ public class RestaurantService {
                 (restaurant.getStation().getStationId(), restaurant.getStation().getStationName(),
                         restaurant.getDistance(), (int) (restaurant.getDistance() / 100)); // 속도는 100m/s
 
-        // 리뷰태그 구현
+        // 리뷰태그
         List<TagEntity> top4SelectedReviewTag = getTop4SelectedReviewTag(restaurantId);
 
         List<RestaurantDetailResponse.RestReviewTag> restReviewTagList = new ArrayList<>();
 
-        for(int i=0; i<top4SelectedReviewTag.size(); i++) {
+        for(int i=1; i<=top4SelectedReviewTag.size(); i++) {
             RestaurantDetailResponse.RestReviewTag reviewTag
                     = new RestaurantDetailResponse.RestReviewTag
-                    (top4SelectedReviewTag.get(i).getTagId(), top4SelectedReviewTag.get(i).getTagName());
+                    (top4SelectedReviewTag.get(i-1).getTagId(), top4SelectedReviewTag.get(i-1).getTagName());
             restReviewTagList.add(reviewTag);
         }
 
@@ -147,9 +147,8 @@ public class RestaurantService {
         int[] tagCountArray = new int[tagSize + 1];
 
         for(ReviewTagEntity reviewTag : reviewTagEntityList) {
-            tagCountArray[reviewTag.getTag().getTagId()]++;
+            tagCountArray[reviewTag.getTag().getTagId()-1]++;
         }
-
 
         int[] top4TagIds = IntStream.range(0, tagCountArray.length)
                 .filter(i -> tagCountArray[i] > 0) // 리뷰가 1개 이상인 것만
