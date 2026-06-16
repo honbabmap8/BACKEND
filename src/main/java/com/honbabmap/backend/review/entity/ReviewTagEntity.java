@@ -1,5 +1,6 @@
 package com.honbabmap.backend.review.entity;
 
+import com.honbabmap.backend.restaurant.entity.FeatureEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,9 +15,11 @@ public class ReviewTagEntity {
     @Column(name = "review_tag_id", nullable = false)
     private Integer reviewTagId;
 
-    @Column(name = "review_id", nullable = false)
-    private Integer reviewId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id", nullable = false)
+    private ReviewEntity reviewId;
 
-    @Column(name = "tag_id", nullable = false)
-    private Integer tagId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_id", nullable = false)
+    private TagEntity tagId;
 }
