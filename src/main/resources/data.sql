@@ -1,0 +1,92 @@
+INSERT INTO subway_stations
+(station_id, station_name, rest_lat, rest_lng)
+VALUES
+    (1, '삼각지역', 37.5345, 126.9733);
+
+INSERT INTO features (feature_id, feature_name) VALUES (1, '1인석 있음');
+INSERT INTO features (feature_id, feature_name) VALUES (2, '조용한 분위기');
+INSERT INTO features (feature_id, feature_name) VALUES (3, '혼밥 추천');
+INSERT INTO features (feature_id, feature_name) VALUES (4, '가성비');
+
+INSERT INTO restaurants
+(rest_id, rest_name, rest_level, station_id, rest_distance, rest_lat, rest_lng, representative_menu, rest_detail, image_url, created_at)
+VALUES
+    (1, '마녀김밥 삼각지점', 1, 1, 117, 37.536604, 126.972960, '마녀 김밥, 묵참 김밥', '분식', 'https://buly.kr/6Bz27zl', NOW()),
+    (2, '명화원', 2, 1, 64, 37.536755, 126.974490, '자장면, 짬뽕', '중식', 'https://buly.kr/6te7DBT', NOW()),
+    (3, '101번지남산돈까스 삼각지점', 3, 1, 47, 37.535591, 126.975520, '돈까스누들맵떡, 남산치킨까스', '돈까스', 'https://buly.kr/7x8f66W', NOW()),
+    (4, '대원식당', 4, 1, 141, 37.534845, 126.974913, '생선구이백반, 두루치기백반', '연탄불 향 가득한 생선구이의 진수', 'https://buly.kr/A47kruM', NOW()),
+    (5, '멜팅팟', 5, 1, 162, 37.535022, 126.974350, '전복 내장 파스타, 토마토 꿀 가자미', '퀄리티가 보장된 인생 맛집', 'https://buly.kr/D3gdXoW', NOW()),
+    (6, '더수피', 1, 1, 155, 37.536229, 126.971754, '솔티드 카라멜 프렌치토스트, 할라피뇨엔쵸비파스타', '깔끔한 음식과 분위기 좋은 브런치 카페', 'https://buly.kr/90dCz3r', NOW()),
+    (7, '맘스터치 삼각지역점', 2, 1, 15, 37.537071, 126.974370, '싸이버거 세트, 빅싸이순살', '햄버거', 'https://buly.kr/GkuY8yB', NOW()),
+    (8, '한강버거', 3, 1, 100, 37.535071, 126.975470, '새우버거, 한강 BBQ 버거', '오동통 새우가 씹히는 새우버거의 매력', 'https://buly.kr/15R6qNU', NOW()),
+    (9, '치히로 서울용산점', 4, 1, 254, 37.533080, 126.973394, '에비텐동, 사케동', '바삭한 텐동과 함께하는 행복한 한 끼', 'https://buly.kr/AlmmnGE', NOW()),
+    (10, '이아초밥 용산점', 5, 1, 217, 37.531796, 126.972203, '회전초밥, 우동정식', '회전초밥으로 만나는 신선한 맛', 'https://buly.kr/GvpJ7pL', NOW()),
+    (11, '스시투고', 1, 1, 99, 37.536376, 126.972653, '모듬초밥, 불초밥+미니우동', '불향 가득 입힌 인기 초밥의 매력', 'https://buly.kr/883Q53Y', NOW()),
+    (12, '마토미', 2, 1, 190, 37.537501, 126.974349, '수아데로 타코, 트리파스 타코', '곱창타코로 느끼는 멕시코의 진한 맛', 'https://buly.kr/8piS0KZ', NOW()),
+    (13, '부국정', 3, 1, 110, 37.534596, 126.974254, '양곰탕, 한우육회비빔밥', '진한 국물의 해장국이 인기인 삼각지 대표 맛집', 'https://buly.kr/1GLrpGK', NOW()),
+    (14, '덕순이감자탕', 4, 1, 118, 37.534135, 126.973849, '뼈해장국, 우거지감자탕', '깔끔한 국물맛의 묵은지감자탕', 'https://buly.kr/Chr7aIu', NOW()),
+    (15, '골목식당', 5, 1, 119, 37.534520, 126.974341, '순두부찌개, 청국장', '요일별 정식 맛집', 'https://buly.kr/6Bz27zl', NOW());
+
+INSERT INTO rest_feat (rest_feat_id, rest_id, feat_id)
+VALUES
+    (1, 1, 1),
+    (2, 1, 3),
+
+    (3, 2, 2),
+    (4, 2, 3),
+
+    (5, 3, 3),
+    (6, 3, 2),
+
+    (7, 4, 4),
+    (8, 4, 1),
+
+    (9, 5, 1),
+    (10, 5, 4),
+
+    (11, 6, 2),
+    (12, 6, 1),
+
+    (13, 7, 3),
+    (14, 7, 4),
+
+    (15, 8, 4),
+    (16, 8, 2),
+
+    (17, 9, 1),
+    (18, 9, 3),
+
+    (19, 10, 2),
+    (20, 10, 4),
+
+    (21, 11, 3),
+    (22, 11, 1),
+
+    (23, 12, 4),
+    (24, 12, 2),
+
+    (25, 13, 1),
+    (26, 13, 2),
+
+    (27, 14, 2),
+    (28, 14, 3),
+
+    (29, 15, 3),
+    (30, 15, 2);
+
+
+-- 1. 혼밥 정도 (6개)
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (1, '혼자 앉기 편해요');
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (2, '눈치 안 보여요');
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (3, '늦게까지 해요');
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (4, '조용해서 좋아요');
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (5, '회전이 빨라요');
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (6, '식탁 간격이 넓어요');
+
+-- 2. 메뉴/서비스 (6개)
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (7, '메뉴가 다양해요');
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (8, '가성비가 좋아요');
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (9, '포장도 가능해요');
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (10, '1인 메뉴가 있어요');
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (11, '양이 적당해요');
+INSERT INTO TAGS (TAG_ID, TAG_NAME) VALUES (12, '웨이팅이 없어요');

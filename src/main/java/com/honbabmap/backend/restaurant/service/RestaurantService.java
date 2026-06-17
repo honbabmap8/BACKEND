@@ -2,6 +2,7 @@ package com.honbabmap.backend.restaurant.service;
 
 import com.honbabmap.backend.restaurant.dto.RestaurantDetailResponse;
 import com.honbabmap.backend.restaurant.dto.RestaurantListResponse;
+import com.honbabmap.backend.user.UserRepository;
 import com.honbabmap.backend.restaurant.entity.RestFeatEntity;
 import com.honbabmap.backend.restaurant.entity.RestaurantEntity;
 import com.honbabmap.backend.restaurant.entity.StationEntity;
@@ -13,10 +14,12 @@ import com.honbabmap.backend.review.entity.TagEntity;
 import com.honbabmap.backend.review.repository.ReviewRepository;
 import com.honbabmap.backend.review.repository.ReviewTagRepository;
 import com.honbabmap.backend.review.repository.TagRepository;
+
 import com.honbabmap.backend.user.UserRepository;
 import com.honbabmap.backend.user.UserEntity;
 
 import lombok.RequiredArgsConstructor;
+import org.h2.engine.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -40,10 +43,18 @@ public class RestaurantService {
 
     // 페이징 처리를 위해 파라미터에 Pageable 객체를 추가
     public RestaurantListResponse getRestaurantListByStation(Integer stationId, String loginId, Pageable pageable) {
+        Integer honbabLevel;
+        UserEntity user;
 
-        UserEntity user = userRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-        Integer honbabLevel = user.getHonbabLevel();
+        if(loginId != null) {
+            user = userRepository.findByLoginId(loginId)
+                    .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+            honbabLevel = user.getHonbabLevel();
+        }
+        else {
+            honbabLevel = 1;
+        }
+
 
         Optional<StationEntity> stationEntityOptional = stationRepository.findById(stationId);
         if (stationEntityOptional.isEmpty())
@@ -65,10 +76,21 @@ public class RestaurantService {
                     (station.getStationId(), station.getStationName(),
                             restaurant.getDistance(), (int) (restaurant.getDistance() / 100));
 
-            RestaurantListResponse.RestReviewTag reviewTag = new RestaurantListResponse.RestReviewTag(1, "임시태그");
+
+            // 리뷰태그
+            List<TagEntity> top4SelectedReviewTag = getTop4SelectedReviewTag(restaurant.getRestaurantId());
+
             List<RestaurantListResponse.RestReviewTag> restReviewTagList = new ArrayList<>();
-            restReviewTagList.add(reviewTag);
-            restReviewTagList.add(reviewTag);
+
+            if(top4SelectedReviewTag != null && !top4SelectedReviewTag.isEmpty()) {
+                int limit = Math.min(2, top4SelectedReviewTag.size());
+                for(int i=1; i< limit; i++) {
+                    RestaurantListResponse.RestReviewTag reviewTag
+                            = new RestaurantListResponse.RestReviewTag
+                            (top4SelectedReviewTag.get(i-1).getTagId(), top4SelectedReviewTag.get(i-1).getTagName());
+                    restReviewTagList.add(reviewTag);
+                }
+            }
 
             RestaurantListResponse.Restaurant rest = RestaurantListResponse.Restaurant
                     .builder()

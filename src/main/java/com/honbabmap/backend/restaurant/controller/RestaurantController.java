@@ -3,7 +3,6 @@ package com.honbabmap.backend.restaurant.controller;
 import com.honbabmap.backend.restaurant.dto.RestaurantDetailResponse;
 import com.honbabmap.backend.restaurant.dto.RestaurantListResponse;
 import com.honbabmap.backend.restaurant.service.RestaurantService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,7 @@ public class RestaurantController {
 
         RestaurantListResponse response
                 = restaurantService.getRestaurantListByStation(stationId, testLoginId, pageable);
+
         return ResponseEntity.ok(response);
     }
 
