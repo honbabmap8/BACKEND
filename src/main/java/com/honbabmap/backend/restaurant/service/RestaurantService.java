@@ -76,7 +76,6 @@ public class RestaurantService {
                     (station.getStationId(), station.getStationName(),
                             restaurant.getDistance(), (int) (restaurant.getDistance() / 100));
 
-
             // 리뷰태그
             List<TagEntity> top4SelectedReviewTag = getTop4SelectedReviewTag(restaurant.getRestaurantId());
 
