@@ -20,6 +20,8 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
         show_sql: true
-
+jwt:
+  secret: kmuddwuprojecthonbabmapsecretkey
+  expire-length: 3600000 # 단위: 밀리 초, 3600000ms = 1 hour
 server:
   port: 8080 # default port

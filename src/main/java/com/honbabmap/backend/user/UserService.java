@@ -7,12 +7,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
+import com.honbabmap.backend.global.JwtTokenProvider;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     // 회원가입
     public UserEntity signup(String loginId, String password, String nickname) {
@@ -50,7 +53,7 @@ public class UserService {
         }
 
         // JWT 토큰 생성 (현재는 임시 문자열)
-        String accessToken = "dummy-jwt-access-token-xyz";
+        String accessToken = jwtTokenProvider.createToken(loginId);
 
         LoginResponse response = new LoginResponse("로그인에 성공했습니다.",
                 accessToken, user.getUserId(), user.getNickname(), user.getHonbabLevel());

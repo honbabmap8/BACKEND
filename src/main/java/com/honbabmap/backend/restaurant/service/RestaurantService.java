@@ -36,15 +36,13 @@ public class RestaurantService {
     private final UserRepository userRepository;
 
     public RestaurantListResponse getRestaurantListByStation(String loginId, Integer stationId) {
-        UserEntity user = userRepository.findByLoginId(loginId)
-                .orElse(null);
-
         Integer honbabLevel;
-
-        if(user == null) {
+        if(loginId == null) { // 비로그인 사용자인 경우는 혼밥레벨 1
             honbabLevel = 1;
         }
         else {
+            UserEntity user = userRepository.findByLoginId(loginId)
+                    .orElse(null);
             honbabLevel = user.getHonbabLevel();
         }
 
