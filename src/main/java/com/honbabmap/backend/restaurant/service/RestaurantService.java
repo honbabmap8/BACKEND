@@ -72,11 +72,20 @@ public class RestaurantService {
                     (station.getStationId(), station.getStationName(),
                             restaurant.getDistance(), (int) (restaurant.getDistance() / 100)); // 속도는 100m/s
 
-            // 태그 구현 코드는 나중에 구현, 지금은 임시 데이터
-            RestaurantListResponse.RestReviewTag reviewTag = new RestaurantListResponse.RestReviewTag(1, "임시태그");
+            // 리뷰태그
+            List<TagEntity> top4SelectedReviewTag = getTop4SelectedReviewTag(restaurant.getRestaurantId());
             List<RestaurantListResponse.RestReviewTag> restReviewTagList = new ArrayList<>();
-            restReviewTagList.add(reviewTag);
-            restReviewTagList.add(reviewTag);
+
+            if(top4SelectedReviewTag != null && !top4SelectedReviewTag.isEmpty()) {
+                int limit = Math.min(2, top4SelectedReviewTag.size());
+                for(int i=1; i< limit; i++) {
+                    RestaurantListResponse.RestReviewTag reviewTag
+                            = new RestaurantListResponse.RestReviewTag
+                            (top4SelectedReviewTag.get(i-1).getTagId(), top4SelectedReviewTag.get(i-1).getTagName());
+                    restReviewTagList.add(reviewTag);
+                }
+            }
+
 
             RestaurantListResponse.Restaurant rest = RestaurantListResponse.Restaurant
                     .builder()
