@@ -3,7 +3,6 @@ package com.honbabmap.backend.restaurant.controller;
 import com.honbabmap.backend.restaurant.dto.RestaurantDetailResponse;
 import com.honbabmap.backend.restaurant.dto.RestaurantListResponse;
 import com.honbabmap.backend.restaurant.service.RestaurantService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +17,11 @@ public class RestaurantController {
     // 역 기준 식당 검색
     @GetMapping("/station/{stationId}")
     public ResponseEntity<RestaurantListResponse> restaurantListByStation
-    (@PathVariable Integer stationId, @RequestParam Integer honbabLevel) {
+    (@PathVariable Integer stationId) {
+        String loginId = "jaehyeok";
+
         RestaurantListResponse response
-                = restaurantService.getRestaurantListByStation(stationId, honbabLevel);
+                = restaurantService.getRestaurantListByStation(loginId, stationId);
         return ResponseEntity.ok(response);
     }
 

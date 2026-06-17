@@ -2,6 +2,7 @@ package com.honbabmap.backend.restaurant.service;
 
 import com.honbabmap.backend.restaurant.dto.RestaurantDetailResponse;
 import com.honbabmap.backend.restaurant.dto.RestaurantListResponse;
+import com.honbabmap.backend.user.UserRepository;
 import com.honbabmap.backend.restaurant.entity.RestFeatEntity;
 import com.honbabmap.backend.restaurant.entity.RestaurantEntity;
 import com.honbabmap.backend.restaurant.entity.StationEntity;
@@ -13,6 +14,7 @@ import com.honbabmap.backend.review.entity.TagEntity;
 import com.honbabmap.backend.review.repository.ReviewRepository;
 import com.honbabmap.backend.review.repository.ReviewTagRepository;
 import com.honbabmap.backend.review.repository.TagRepository;
+import com.honbabmap.backend.user.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +33,21 @@ public class RestaurantService {
     private final ReviewRepository reviewRepository;
     private final ReviewTagRepository reviewTagRepository;
     private final TagRepository tagRepository;
+    private final UserRepository userRepository;
 
-    public RestaurantListResponse getRestaurantListByStation(Integer stationId, Integer honbabLevel) {
+    public RestaurantListResponse getRestaurantListByStation(String loginId, Integer stationId) {
+        UserEntity user = userRepository.findByLoginId(loginId)
+                .orElse(null);
+
+        Integer honbabLevel;
+
+        if(user == null) {
+            honbabLevel = 1;
+        }
+        else {
+            honbabLevel = user.getHonbabLevel();
+        }
+
         Optional<StationEntity> stationEntityOptional = stationRepository.findById(stationId);
 
         if (!stationEntityOptional.isPresent())
