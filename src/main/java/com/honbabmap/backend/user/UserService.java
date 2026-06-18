@@ -52,7 +52,7 @@ public class UserService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        // JWT 토큰 생성 (현재는 임시 문자열)
+        // JWT 토큰 생성
         String accessToken = jwtTokenProvider.createToken(loginId);
 
         LoginResponse response = new LoginResponse("로그인에 성공했습니다.",
