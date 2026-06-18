@@ -17,10 +17,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class EatbtiEntity {
-
     @Id
     @Column(name = "user_id")
-    private int userId;
+    private Integer userId;
+
+    @Column(name = "login_id")
+    private String loginId;
 
     @Column(name = "score1", nullable = false)
     private int score1;

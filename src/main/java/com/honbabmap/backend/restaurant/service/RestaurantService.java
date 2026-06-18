@@ -41,20 +41,17 @@ public class RestaurantService {
     private final TagRepository tagRepository;
     private final UserRepository userRepository;
 
-    // 페이징 처리를 위해 파라미터에 Pageable 객체를 추가
-    public RestaurantListResponse getRestaurantListByStation(Integer stationId, String loginId, Pageable pageable) {
+    public RestaurantListResponse getRestaurantListByStation(String loginId, Integer stationId, Pageable pageable) {
         Integer honbabLevel;
         UserEntity user;
-
-        if(loginId != null) {
+        if(loginId == null) { // 비로그인 사용자인 경우는 혼밥레벨 1
+            honbabLevel = 1;
+        }
+        else {
             user = userRepository.findByLoginId(loginId)
                     .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
             honbabLevel = user.getHonbabLevel();
         }
-        else {
-            honbabLevel = 1;
-        }
-
 
         Optional<StationEntity> stationEntityOptional = stationRepository.findById(stationId);
         if (stationEntityOptional.isEmpty())

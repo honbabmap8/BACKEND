@@ -4,6 +4,8 @@ import com.honbabmap.backend.eatbti.dto.EatbtiRequest;
 import com.honbabmap.backend.eatbti.dto.EatbtiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -19,14 +21,17 @@ public class EatbtiController {
 
     // 1. EatBTI 검사 제출 (POST)
     @PostMapping
-    public ResponseEntity<Map<String, Object>> submitEatbti(@RequestBody EatbtiRequest request) {
+    public ResponseEntity<Map<String, Object>> submitEatbti
+    (@RequestBody EatbtiRequest request, @AuthenticationPrincipal UserDetails userDetails) {
 
         List<Integer> answers = request.getAnswers();
 
-        // JWT 필터 연동 전까지 통신 테스트를 위해 임시 아이디를 강제로 고정
-        int userId = 1;
+        if (userDetails == null) {
+            throw new IllegalArgumentException("로그인이 필요한 서비스입니다.");
+        }
+        String loginId = userDetails.getUsername();
 
-        EatbtiResponse.Submit submitResult = eatbtiService.submitEatbti(userId, answers);
+        EatbtiResponse.Submit submitResult = eatbtiService.submitEatbti(loginId, answers);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "EatBTI 검사 결과가 성공적으로 반영되었습니다.");
@@ -37,12 +42,14 @@ public class EatbtiController {
 
     // 2. EatBTI 검사 결과 조회 (GET)
     @GetMapping("/result")
-    public ResponseEntity<Map<String, Object>> getEatbtiResult() {
+    public ResponseEntity<Map<String, Object>> getEatbtiResult(@AuthenticationPrincipal UserDetails userDetails) {
 
-        // 여기도 마찬가지로 임시 아이디를 고정하여 사용
-        int userId = 1;
+        if (userDetails == null) {
+            throw new IllegalArgumentException("로그인이 필요한 서비스입니다.");
+        }
+        String loginId = userDetails.getUsername();
 
-        EatbtiResponse.Result getResult = eatbtiService.getEatbtiResult(userId);
+        EatbtiResponse.Result getResult = eatbtiService.getEatbtiResult(loginId);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "EatBTI 검사 결과를 성공적으로 불러왔습니다.");

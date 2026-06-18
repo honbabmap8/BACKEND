@@ -25,8 +25,14 @@ public class BookmarkController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         // userDetails.getUsername() 대신 데이터베이스에 있는 실제 아이디를 강제로 입력
-        String testLoginId = "jaehyeok";
-        BookmarkResponse response = bookmarkService.addBookmark(restaurantId, testLoginId);
+        // String testLoginId = "jaehyeok";
+
+        if (userDetails == null) {
+            throw new IllegalArgumentException("로그인이 필요한 서비스입니다.");
+        }
+        String loginId = userDetails.getUsername();
+
+        BookmarkResponse response = bookmarkService.addBookmark(restaurantId, loginId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -37,9 +43,14 @@ public class BookmarkController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         // userDetails.getUsername() 대신 데이터베이스에 있는 실제 아이디를 강제로 입력
-        String testLoginId = "jaehyeok";
+        // String testLoginId = "jaehyeok";
 
-        BookmarkResponse response = bookmarkService.removeBookmark(restaurantId, testLoginId);
+        if (userDetails == null) {
+            throw new IllegalArgumentException("로그인이 필요한 서비스입니다.");
+        }
+        String loginId = userDetails.getUsername();
+
+        BookmarkResponse response = bookmarkService.removeBookmark(restaurantId, loginId);
         return ResponseEntity.ok(response);
     }
 
@@ -50,9 +61,14 @@ public class BookmarkController {
             @PageableDefault(size = 3) Pageable pageable) {
 
         // 여기도 마찬가지로 userDetails.getUsername() 대신 테스트용 아이디를 넣음
-        String testLoginId = "jaehyeok";
+        // String testLoginId = "jaehyeok";
+
+        if (userDetails == null) {
+            throw new IllegalArgumentException("로그인이 필요한 서비스입니다.");
+        }
+        String loginId = userDetails.getUsername();
 
         // 목록 조회는 data 필드가 포함된 응답이므로 서비스에서 적절한 DTO를 반환
-        return ResponseEntity.ok(bookmarkService.getMyBookmarks(testLoginId, pageable));
+        return ResponseEntity.ok(bookmarkService.getMyBookmarks(loginId, pageable));
     }
 }

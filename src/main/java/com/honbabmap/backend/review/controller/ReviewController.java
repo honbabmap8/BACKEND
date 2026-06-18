@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,10 +21,15 @@ public class ReviewController {
     @PostMapping("/{restaurantId}/reviews")
     public ResponseEntity<ReviewResponse> createReview(
             @PathVariable Integer restaurantId,
-            @Valid @RequestBody ReviewRequest request) {
+            @Valid @RequestBody ReviewRequest request, @AuthenticationPrincipal UserDetails userDetails) {
 
         // 토큰 검증을 임시로 꺼두었으므로, 테스트를 위해 DB에 존재하는 실제 유저 아이디를 직접 주입
-        String loginId = "jaehyeok";
+        // String loginId = "jaehyeok";
+
+        if (userDetails == null) {
+            throw new IllegalArgumentException("로그인이 필요한 서비스입니다.");
+        }
+        String loginId = userDetails.getUsername();
 
         // 식당 ID, 요청 데이터, 그리고 강제로 지정한 유저 ID를 서비스 로직으로 전달
         ReviewResponse response = reviewService.createReview(restaurantId, request, loginId);
