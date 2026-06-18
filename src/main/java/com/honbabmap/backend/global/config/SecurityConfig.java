@@ -1,9 +1,10 @@
-package com.honbabmap.backend.global;
+package com.honbabmap.backend.global.config;
 
+import com.honbabmap.backend.global.JwtAuthentication;
+import com.honbabmap.backend.global.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
