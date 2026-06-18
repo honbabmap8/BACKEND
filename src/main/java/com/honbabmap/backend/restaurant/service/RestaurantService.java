@@ -14,8 +14,14 @@ import com.honbabmap.backend.review.entity.TagEntity;
 import com.honbabmap.backend.review.repository.ReviewRepository;
 import com.honbabmap.backend.review.repository.ReviewTagRepository;
 import com.honbabmap.backend.review.repository.TagRepository;
+
+import com.honbabmap.backend.user.UserRepository;
 import com.honbabmap.backend.user.UserEntity;
+
 import lombok.RequiredArgsConstructor;
+import org.h2.engine.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,7 +32,7 @@ import java.util.stream.IntStream;
 @Service
 @RequiredArgsConstructor
 public class RestaurantService {
-    // Repository
+
     private final RestaurantRepository restaurantRepository;
     private final StationRepository stationRepository;
     private final RestFeatRepository restFeatRepository;
@@ -35,46 +41,52 @@ public class RestaurantService {
     private final TagRepository tagRepository;
     private final UserRepository userRepository;
 
-    public RestaurantListResponse getRestaurantListByStation(String loginId, Integer stationId) {
+    public RestaurantListResponse getRestaurantListByStation(String loginId, Integer stationId, Pageable pageable) {
         Integer honbabLevel;
+        UserEntity user;
         if(loginId == null) { // 비로그인 사용자인 경우는 혼밥레벨 1
             honbabLevel = 1;
         }
         else {
-            UserEntity user = userRepository.findByLoginId(loginId)
-                    .orElse(null);
+            user = userRepository.findByLoginId(loginId)
+                    .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
             honbabLevel = user.getHonbabLevel();
         }
 
         Optional<StationEntity> stationEntityOptional = stationRepository.findById(stationId);
-
-        if (!stationEntityOptional.isPresent())
+        if (stationEntityOptional.isEmpty())
             throw new IllegalArgumentException("존재하지 않는 지하철역 입니다.");
 
-        StationEntity station = stationEntityOptional.get(); // 지하철역 테이블에 존재하는 지하철역임.
+        StationEntity station = stationEntityOptional.get();
 
-        List<RestaurantEntity> restaurantEntityList = restaurantRepository.findAllByStationStationId(station.getStationId());
-        // stationId에 해당하는 레스토랑 리스트를 가져옴.
+        // DB에서 혼밥 레벨 필터링과 페이징을 한 번에 처리하도록 레포지토리 메서드 변경
+        Page<RestaurantEntity> restaurantPage = restaurantRepository
+                .findByStationStationIdAndRestSoloLevelLessThanEqual(station.getStationId(), honbabLevel, pageable);
 
         List<RestaurantListResponse.Restaurant> restaurantListForDto = new ArrayList<>();
-        // response dto에 레스토랑 리스트를 담을 리스트를 생성
 
-        for (RestaurantEntity restaurant : restaurantEntityList) {
-            // 사용자 레벨과 같거나 하위 레벨만 조회할 것.
-            if (honbabLevel < restaurant.getRestSoloLevel())
-                continue;
+        // Page 객체에서 실제 데이터 리스트만 꺼내서 순회 (자바 단의 수동 필터링 로직 삭제)
+        for (RestaurantEntity restaurant : restaurantPage.getContent()) {
 
-            // locationInfo
             RestaurantListResponse.LocationInfo locationInfo
                     = new RestaurantListResponse.LocationInfo
                     (station.getStationId(), station.getStationName(),
-                            restaurant.getDistance(), (int) (restaurant.getDistance() / 100)); // 속도는 100m/s
+                            restaurant.getDistance(), (int) (restaurant.getDistance() / 100));
 
-            // 태그 구현 코드는 나중에 구현, 지금은 임시 데이터
-            RestaurantListResponse.RestReviewTag reviewTag = new RestaurantListResponse.RestReviewTag(1, "임시태그");
+            // 리뷰태그
+            List<TagEntity> top4SelectedReviewTag = getTop4SelectedReviewTag(restaurant.getRestaurantId());
+
             List<RestaurantListResponse.RestReviewTag> restReviewTagList = new ArrayList<>();
-            restReviewTagList.add(reviewTag);
-            restReviewTagList.add(reviewTag);
+
+            if(top4SelectedReviewTag != null && !top4SelectedReviewTag.isEmpty()) {
+                int limit = Math.min(2, top4SelectedReviewTag.size());
+                for(int i=1; i< limit; i++) {
+                    RestaurantListResponse.RestReviewTag reviewTag
+                            = new RestaurantListResponse.RestReviewTag
+                            (top4SelectedReviewTag.get(i-1).getTagId(), top4SelectedReviewTag.get(i-1).getTagName());
+                    restReviewTagList.add(reviewTag);
+                }
+            }
 
             RestaurantListResponse.Restaurant rest = RestaurantListResponse.Restaurant
                     .builder()
@@ -89,30 +101,32 @@ public class RestaurantService {
             restaurantListForDto.add(rest);
         }
 
-        RestaurantListResponse.RestaurantData data = new RestaurantListResponse.RestaurantData(restaurantListForDto);
+        // API 명세서에 맞게 전체 데이터 수, 전체 페이지 수, 현재 페이지 번호를 함께 담음
+        RestaurantListResponse.RestaurantData data = new RestaurantListResponse.RestaurantData(
+                restaurantPage.getTotalElements(),
+                restaurantPage.getTotalPages(),
+                restaurantPage.getNumber(),
+                restaurantListForDto
+        );
 
-        RestaurantListResponse response = new RestaurantListResponse("역 근처 식당 목록을 성공적으로 불러왔습니다.", data);
-
-        return response;
+        return new RestaurantListResponse("역 근처 식당 목록을 성공적으로 불러왔습니다.", data);
     }
 
     public RestaurantDetailResponse getRestaurantDetail(Integer restaurantId) {
         Optional<RestaurantEntity> restaurantEntityOptional = restaurantRepository.findById(restaurantId);
 
-        if (!restaurantEntityOptional.isPresent())
+        if (restaurantEntityOptional.isEmpty())
             throw new IllegalArgumentException("존재하지 않는 가게 입니다.");
 
         RestaurantEntity restaurant = restaurantEntityOptional.get();
 
-        // locationInfo
         RestaurantDetailResponse.LocationInfo locationInfo
                 = new RestaurantDetailResponse.LocationInfo
                 (restaurant.getStation().getStationId(), restaurant.getStation().getStationName(),
-                        restaurant.getDistance(), (int) (restaurant.getDistance() / 100)); // 속도는 100m/s
+                        restaurant.getDistance(), (int) (restaurant.getDistance() / 100));
 
-        // 리뷰태그
+        // 메인 브랜치에 있던 실제 구현된 리뷰태그 로직을 유지
         List<TagEntity> top4SelectedReviewTag = getTop4SelectedReviewTag(restaurantId);
-
         List<RestaurantDetailResponse.RestReviewTag> restReviewTagList = new ArrayList<>();
 
         for(int i=1; i<=top4SelectedReviewTag.size(); i++) {
@@ -146,9 +160,7 @@ public class RestaurantService {
                 .restReviewTagList(restReviewTagList)
                 .build();
 
-        RestaurantDetailResponse response = new RestaurantDetailResponse("식당 상세 정보 조회에 성공했습니다.", restaurantData);
-
-        return response;
+        return new RestaurantDetailResponse("식당 상세 정보 조회에 성공했습니다.", restaurantData);
     }
 
     public List<TagEntity> getTop4SelectedReviewTag(Integer restaurantId) {

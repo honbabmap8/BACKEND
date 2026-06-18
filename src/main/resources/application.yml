@@ -10,10 +10,18 @@ spring:
       enabled: true
       path: /h2-console # 접속 경로 url 지정
 
+  # data.sql 파일을 읽어서 초기 데이터를 자동으로 집어넣는 설정
+  sql:
+    init:
+      mode: always # 서버가 켜질 때마다 sql 파일을 항상 실행함
+      encoding: UTF-8 # 한글 데이터 깨짐 방지
+
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
     hibernate:
-      ddl-auto: update       # create # 서버를 생성할 때마다 테이블 생성
+      ddl-auto: create-drop # 서버가 꺼지고 다시 켜졌을 때 테이블을 처음부터 만듦.
+      # create # 서버를 생성할 때마다 테이블 생성
       # update: 엔티티에 맞춰 테이블 업데이트, 기존 데이터는 삭제 안 함.
     properties:
       hibernate:

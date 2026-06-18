@@ -4,10 +4,12 @@ import com.honbabmap.backend.restaurant.dto.RestaurantDetailResponse;
 import com.honbabmap.backend.restaurant.dto.RestaurantListResponse;
 import com.honbabmap.backend.restaurant.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +21,9 @@ public class RestaurantController {
     // 역 기준 식당 검색
     @GetMapping("/station/{stationId}")
     public ResponseEntity<RestaurantListResponse> restaurantListByStation
-    (@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer stationId) {
+
+    (@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer stationId,
+    @PageableDefault(size = 5) Pageable pageable) {
         String loginId;
         if(userDetails != null) { // 로그인한 사용자인 경우 로그인 아이디 저장
             loginId = userDetails.getUsername();
@@ -27,7 +31,8 @@ public class RestaurantController {
         else loginId = null; // 비로그인 사용자인 경우 loginId는 null
 
         RestaurantListResponse response
-                = restaurantService.getRestaurantListByStation(loginId, stationId);
+                = restaurantService.getRestaurantListByStation(loginId, stationId, pageable);
+
         return ResponseEntity.ok(response);
     }
 
