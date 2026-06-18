@@ -143,7 +143,10 @@ public class RestaurantService {
 
         for(int i = 0; i < 2; i++) {
             featTag = new RestaurantDetailResponse.RestFeatTag
-                    (restFeat.get(i).getFeatureId().getFeatureId(), restFeat.get(i).getFeatureId().getFeatureName());
+                    (restFeat.get(i).getFeatureId().getFeatureId(),
+                            restFeat.get(i).getFeatureId().getFeatureName(),
+                            restFeat.get(i).getFeatureId().getFeatureDetail(),
+                            restFeat.get(i).getFeatureId().getFeatureImg());
             featTagList.add(featTag);
         }
 

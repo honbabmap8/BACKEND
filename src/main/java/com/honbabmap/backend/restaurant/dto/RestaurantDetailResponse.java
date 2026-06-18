@@ -35,6 +35,8 @@ public class RestaurantDetailResponse {
     public static class RestFeatTag { // 특징 클래스
         private Integer featId;
         private String featName;
+        private String featDetail;
+        private String featImg;
     }
 
     @Getter

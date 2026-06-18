@@ -17,4 +17,10 @@ public class FeatureEntity {
 
     @Column(name = "feature_name") // ERD의 특징태그 이름
     private String featureName;
+
+    @Column(name = "feature_detail") // ERD의 특징태그 이름
+    private String featureDetail;
+
+    @Column(name = "feature_img") // ERD의 특징태그 이름
+    private String featureImg;
 }
