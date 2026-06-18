@@ -5,6 +5,7 @@ import com.honbabmap.backend.eatbti.dto.EatbtiResponse;
 import com.honbabmap.backend.user.UserEntity;
 import com.honbabmap.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.h2.engine.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,19 +20,23 @@ public class EatbtiService {
 
     // 1. EatBTI 검사 결과 계산 및 저장 (POST)
     @Transactional
-    public EatbtiResponse.Submit submitEatbti(int userId,  List<Integer> answers) {
+    public EatbtiResponse.Submit submitEatbti(String loginId, List<Integer> answers) {
 
-        int score1 = answers.get(0);
-        int score2 = answers.get(1);
-        int score3 = answers.get(2);
-        int score4 = answers.get(3);
-        int score5 = answers.get(4);
+        UserEntity user = userRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        int score1 = 6 - answers.get(0);
+        int score2 = 6 - answers.get(1);
+        int score3 = 6 - answers.get(2);
+        int score4 = 6 - answers.get(3);
+        int score5 = 6 - answers.get(4);
 
         double totalScore = score1 + score2 + (score3 * 1.5) + score4 + score5;
         int honbabLevel = determineLevel(totalScore);
 
         EatbtiEntity eatbtiEntity = EatbtiEntity.builder()
-                .userId(userId)
+                .userId(user.getUserId())
+                .loginId(user.getLoginId())
                 .score1(score1)
                 .score2(score2)
                 .score3(score3)
@@ -42,36 +47,34 @@ public class EatbtiService {
         eatbtiRepository.save(eatbtiEntity);
 
         // 유저 레벨 업데이트
-        UserEntity user = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
         user.updateHonbabLevel(honbabLevel);
 
         return EatbtiResponse.Submit.builder()
-                .userId(userId)
+                .userId(user.getUserId())
                 .honbabLevel(honbabLevel)
                 .build();
     }
 
     // 2. EatBTI 검사 결과 조회 (GET)
     @Transactional(readOnly = true)
-    public EatbtiResponse.Result getEatbtiResult(int userId) {
+    public EatbtiResponse.Result getEatbtiResult(String loginId) {
 
-        UserEntity user = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        UserEntity user = userRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
-        EatbtiEntity eatbti = eatbtiRepository.findByUserId(userId)
+        EatbtiEntity eatbti = eatbtiRepository.findByLoginId(user.getLoginId())
                 .orElseThrow(() -> new IllegalArgumentException("아직 EatBTI 검사를 진행하지 않은 사용자입니다."));
 
-        int level = user.getHonbabLevel();
+        Integer honbabLevel = user.getHonbabLevel();
 
         return EatbtiResponse.Result.builder()
-                .userId(userId)
+                .userId(user.getUserId())
                 .nickname(user.getNickname())
-                .honbabLevel(level)
-                .levelName(getLevelName(level))
-                .description(getDescription(level))
-                .imageUrl(getImageUrl(level))
+                .honbabLevel(honbabLevel)
+                .levelName(getLevelName(honbabLevel))
+                .description(getDescription(honbabLevel))
+                .imageUrl(getImageUrl(honbabLevel))
                 .build();
     }
 

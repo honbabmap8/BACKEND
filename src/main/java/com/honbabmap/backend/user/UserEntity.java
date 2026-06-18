@@ -1,5 +1,7 @@
 package com.honbabmap.backend.user;
 
+import com.honbabmap.backend.eatbti.EatbtiEntity;
+import com.honbabmap.backend.review.entity.TagEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -35,6 +37,11 @@ public class UserEntity {
 
     public void updateHonbabLevel(Integer honbabLevel){
         this.honbabLevel = honbabLevel; }
+
+    // 조인 추가: UserEntity와 일대일(1:1) 관계로 연결
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private EatbtiEntity eatbti;
 
     @CreationTimestamp // INSERT 시 자동으로 현재 시간 기록
     @Column(name = "created_at", nullable = false, updatable = false)

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface EatbtiRepository extends JpaRepository<EatbtiEntity, Integer> {
+public interface EatbtiRepository extends JpaRepository<EatbtiEntity, String> {
 
-    Optional<EatbtiEntity> findByUserId(Integer userId);
+    Optional<EatbtiEntity> findByLoginId(String loginId);
 }
