@@ -41,7 +41,7 @@ public class RestaurantService {
     private final TagRepository tagRepository;
     private final UserRepository userRepository;
 
-    public RestaurantListResponse getRestaurantListByStation(String loginId, Integer stationId, Pageable pageable) {
+    public RestaurantListResponse getRestaurantListByStation(String loginId, Integer stationId) {
         Integer honbabLevel;
         UserEntity user;
         if(loginId == null) { // 비로그인 사용자인 경우는 혼밥레벨 1
@@ -59,15 +59,14 @@ public class RestaurantService {
 
         StationEntity station = stationEntityOptional.get();
 
-        // DB에서 혼밥 레벨 필터링과 페이징을 한 번에 처리하도록 레포지토리 메서드 변경
-        Page<RestaurantEntity> restaurantPage = restaurantRepository
-                .findByStationStationIdAndRestSoloLevelLessThanEqual(station.getStationId(), honbabLevel, pageable);
+        List<RestaurantEntity> restaurantEntityList = restaurantRepository
+                .findAllByStationStationId(station.getStationId());
 
         List<RestaurantListResponse.Restaurant> restaurantListForDto = new ArrayList<>();
 
-        // Page 객체에서 실제 데이터 리스트만 꺼내서 순회 (자바 단의 수동 필터링 로직 삭제)
-        for (RestaurantEntity restaurant : restaurantPage.getContent()) {
-
+        for (RestaurantEntity restaurant : restaurantEntityList) {
+            if(restaurant.getRestSoloLevel() > honbabLevel)
+                continue;
             RestaurantListResponse.LocationInfo locationInfo
                     = new RestaurantListResponse.LocationInfo
                     (station.getStationId(), station.getStationName(),
@@ -103,11 +102,7 @@ public class RestaurantService {
 
         // API 명세서에 맞게 전체 데이터 수, 전체 페이지 수, 현재 페이지 번호를 함께 담음
         RestaurantListResponse.RestaurantData data = new RestaurantListResponse.RestaurantData(
-                restaurantPage.getTotalElements(),
-                restaurantPage.getTotalPages(),
-                restaurantPage.getNumber(),
-                restaurantListForDto
-        );
+                restaurantListForDto);
 
         return new RestaurantListResponse("역 근처 식당 목록을 성공적으로 불러왔습니다.", data);
     }

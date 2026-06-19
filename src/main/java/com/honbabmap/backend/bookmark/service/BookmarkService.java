@@ -11,8 +11,6 @@ import com.honbabmap.backend.restaurant.repository.RestaurantRepository;
 import com.honbabmap.backend.user.UserEntity;
 import com.honbabmap.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,13 +56,13 @@ public class BookmarkService {
         return new BookmarkResponse("단골가게 등록이 취소되었습니다.");
     }
 
-    public BookmarkListResponse getMyBookmarks(String loginId, Pageable pageable) {
+    public BookmarkListResponse getMyBookmarks(String loginId) {
         UserEntity user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
-        Page<BookmarkEntity> bookmarkPage = bookmarkRepository.findByUser(user, pageable);
+        List<BookmarkEntity> bookmarkEntityList = bookmarkRepository.findByUser(user);
 
-        List<RestaurantSummaryDto> restaurantList = bookmarkPage.getContent().stream()
+        List<RestaurantSummaryDto> restaurantList = bookmarkEntityList.stream()
                 .map(bookmark -> {
                     RestaurantEntity restaurant = bookmark.getRestaurant();
                     return new RestaurantSummaryDto(
@@ -77,12 +75,7 @@ public class BookmarkService {
                 })
                 .toList();
 
-        BookmarkListData data = new BookmarkListData(
-                bookmarkPage.getTotalElements(),
-                bookmarkPage.getTotalPages(),
-                bookmarkPage.getNumber(),
-                restaurantList
-        );
+        BookmarkListData data = new BookmarkListData(restaurantList);
 
         return new BookmarkListResponse("단골가게 목록을 성공적으로 불러왔습니다.", data);
     }

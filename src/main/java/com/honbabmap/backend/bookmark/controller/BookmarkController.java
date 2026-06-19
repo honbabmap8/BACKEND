@@ -57,8 +57,7 @@ public class BookmarkController {
     // 3. 내 단골가게 목록 조회
     @GetMapping("/users/me/bookmarks")
     public ResponseEntity<?> getMyBookmarks(
-            @AuthenticationPrincipal UserDetails userDetails,
-            @PageableDefault(size = 3) Pageable pageable) {
+            @AuthenticationPrincipal UserDetails userDetails) {
 
         // 여기도 마찬가지로 userDetails.getUsername() 대신 테스트용 아이디를 넣음
         // String testLoginId = "jaehyeok";
@@ -69,6 +68,6 @@ public class BookmarkController {
         String loginId = userDetails.getUsername();
 
         // 목록 조회는 data 필드가 포함된 응답이므로 서비스에서 적절한 DTO를 반환
-        return ResponseEntity.ok(bookmarkService.getMyBookmarks(loginId, pageable));
+        return ResponseEntity.ok(bookmarkService.getMyBookmarks(loginId));
     }
 }
