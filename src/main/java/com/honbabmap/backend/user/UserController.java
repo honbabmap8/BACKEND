@@ -5,6 +5,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,4 +34,13 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
+
+//    @GetMapping("/me")
+//    public ResponseEntity<MyPageResponse> getMyPageInfo(@AuthenticationPrincipal UserDetails userDetails) {
+//
+//        String loginId = userDetails.getUsername();
+//        MyPageResponse response = userService.getMyPageInfo(loginId);
+//
+//        return ResponseEntity.ok(response);
+//    }
 }
