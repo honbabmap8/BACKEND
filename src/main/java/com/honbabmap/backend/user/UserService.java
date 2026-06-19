@@ -59,7 +59,7 @@ public class UserService {
         // JWT 토큰 생성
         String accessToken = jwtTokenProvider.createToken(loginId);
 
-        Boolean isNewUser = eatbtiRepository.findByLoginId("loginId").isEmpty();
+        Boolean isNewUser = eatbtiRepository.findByLoginId(loginId).isEmpty();
 
         LoginResponse response = new LoginResponse("로그인에 성공했습니다.",
                 accessToken, user.getUserId(), user.getNickname(), user.getHonbabLevel(), isNewUser);
