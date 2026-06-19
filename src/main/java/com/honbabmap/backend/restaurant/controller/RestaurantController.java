@@ -22,8 +22,7 @@ public class RestaurantController {
     @GetMapping("/station/{stationId}")
     public ResponseEntity<RestaurantListResponse> restaurantListByStation
 
-    (@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer stationId,
-    @PageableDefault(size = 5) Pageable pageable) {
+    (@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer stationId) {
         String loginId;
         if(userDetails != null) { // 로그인한 사용자인 경우 로그인 아이디 저장
             loginId = userDetails.getUsername();
@@ -31,7 +30,7 @@ public class RestaurantController {
         else loginId = null; // 비로그인 사용자인 경우 loginId는 null
 
         RestaurantListResponse response
-                = restaurantService.getRestaurantListByStation(loginId, stationId, pageable);
+                = restaurantService.getRestaurantListByStation(loginId, stationId);
 
         return ResponseEntity.ok(response);
     }

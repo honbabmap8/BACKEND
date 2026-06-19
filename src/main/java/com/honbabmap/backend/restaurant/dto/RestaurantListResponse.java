@@ -17,9 +17,6 @@ public class RestaurantListResponse {
     @Builder
     @AllArgsConstructor
     public static class RestaurantData {
-        long totalElements;
-        int totalPages;
-        int currentPage;
         private List<Restaurant> restaurantList;
     }
 
