@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MyPageResponse {
-    private Long userId;
+    private Integer userId;
     private String nickname;
     private int honbabLevel;
 }

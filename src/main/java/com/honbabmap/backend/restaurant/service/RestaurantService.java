@@ -100,7 +100,6 @@ public class RestaurantService {
             restaurantListForDto.add(rest);
         }
 
-        // API 명세서에 맞게 전체 데이터 수, 전체 페이지 수, 현재 페이지 번호를 함께 담음
         RestaurantListResponse.RestaurantData data = new RestaurantListResponse.RestaurantData(
                 restaurantListForDto);
 

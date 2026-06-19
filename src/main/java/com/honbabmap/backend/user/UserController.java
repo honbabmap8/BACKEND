@@ -35,12 +35,12 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-//    @GetMapping("/me")
-//    public ResponseEntity<MyPageResponse> getMyPageInfo(@AuthenticationPrincipal UserDetails userDetails) {
-//
-//        String loginId = userDetails.getUsername();
-//        MyPageResponse response = userService.getMyPageInfo(loginId);
-//
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping("/me")
+    public ResponseEntity<MyPageResponse> getMyPageInfo(@AuthenticationPrincipal UserDetails userDetails) {
+
+        String loginId = userDetails.getUsername();
+        MyPageResponse response = userService.getMyPageInfo(loginId);
+
+        return ResponseEntity.ok(response);
+    }
 }

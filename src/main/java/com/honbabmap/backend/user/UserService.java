@@ -4,6 +4,7 @@ import com.honbabmap.backend.eatbti.EatbtiEntity;
 import com.honbabmap.backend.eatbti.EatbtiRepository;
 import com.honbabmap.backend.user.dto.LoginRequest;
 import com.honbabmap.backend.user.dto.LoginResponse;
+import com.honbabmap.backend.user.dto.MyPageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -65,4 +66,18 @@ public class UserService {
 
         return response;
     }
-}
+
+        // 마이페이지 유저 정보 조회
+        public MyPageResponse getMyPageInfo(String loginId) {
+
+            UserEntity user = userRepository.findByLoginId(loginId)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+
+
+            return new MyPageResponse(
+                    user.getUserId(),
+                    user.getNickname(),
+                    user.getHonbabLevel()
+            );
+        }
+    }
