@@ -3,16 +3,16 @@ INSERT INTO subway_stations
 VALUES
     (1, '삼각지역', 37.5345, 126.9733);
 
-INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (1, '1인석 있음', '바 테이블 다수', '/static/img/img1.svg');
-INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (2, '1인 메뉴 가능', '1인 메뉴 ok', '/static/img/img2.svg');
-INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (3, '혼밥 난이도', '혼밥 만족도 높음', '/static/img/img3.svg');
-INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (4, '빠른 회전율', '혼밥 30분 코스', '/static/img/img4.svg');
-INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (5, '시선 부담', '혼자 있기 편함', '/static/img/img5.svg');
-INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (6, '타겟층 추천', '혼밥 입문 추천', '/static/img/img6.svg');
-INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (7, '혼밥 분위기', '조용한 분위기', '/static/img/img7.svg');
-INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (8, '회전율', '빠른 식사 가능', '/static/img/img8.svg');
-INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (9, '이용 목적', '혼자 힐링하기 좋음', '/static/img/img9.svg');
-INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (10, '재방문율', '단골이 많은 곳', '/static/img/img10.svg');
+INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (1, '1인석 있음', '바 테이블 다수', '/img/img1.svg');
+INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (2, '1인 메뉴 가능', '1인 메뉴 ok', '/img/img2.svg');
+INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (3, '혼밥 난이도', '혼밥 만족도 높음', '/img/img3.svg');
+INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (4, '빠른 회전율', '혼밥 30분 코스', '/img/img4.svg');
+INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (5, '시선 부담', '혼자 있기 편함', '/img/img5.svg');
+INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (6, '타겟층 추천', '혼밥 입문 추천', '/img/img6.svg');
+INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (7, '혼밥 분위기', '조용한 분위기', '/img/img7.svg');
+INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (8, '회전율', '빠른 식사 가능', '/img/img8.svg');
+INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (9, '이용 목적', '혼자 힐링하기 좋음', '/img/img9.svg');
+INSERT INTO features (feature_id, feature_name, feature_detail, feature_img) VALUES (10, '재방문율', '단골이 많은 곳', '/img/img10.svg');
 
 INSERT INTO restaurants
 (rest_id, rest_name, rest_level, station_id, rest_distance, rest_lat, rest_lng, representative_menu, rest_detail, image_url, created_at)
