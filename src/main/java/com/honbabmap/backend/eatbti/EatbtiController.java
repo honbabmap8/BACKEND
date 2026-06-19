@@ -31,6 +31,7 @@ public class EatbtiController {
         }
         String loginId = userDetails.getUsername();
 
+
         EatbtiResponse.Submit submitResult = eatbtiService.submitEatbti(loginId, answers);
 
         Map<String, Object> response = new HashMap<>();

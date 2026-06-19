@@ -1,5 +1,7 @@
 package com.honbabmap.backend.user;
 
+import com.honbabmap.backend.eatbti.EatbtiEntity;
+import com.honbabmap.backend.eatbti.EatbtiRepository;
 import com.honbabmap.backend.user.dto.LoginRequest;
 import com.honbabmap.backend.user.dto.LoginResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final EatbtiRepository eatbtiRepository;
 
     // 회원가입
     public UserEntity signup(String loginId, String password, String nickname) {
@@ -55,8 +58,10 @@ public class UserService {
         // JWT 토큰 생성
         String accessToken = jwtTokenProvider.createToken(loginId);
 
+        Boolean isNewUser = eatbtiRepository.findByLoginId("loginId").isEmpty();
+
         LoginResponse response = new LoginResponse("로그인에 성공했습니다.",
-                accessToken, user.getUserId(), user.getNickname(), user.getHonbabLevel());
+                accessToken, user.getUserId(), user.getNickname(), user.getHonbabLevel(), isNewUser);
 
         return response;
     }

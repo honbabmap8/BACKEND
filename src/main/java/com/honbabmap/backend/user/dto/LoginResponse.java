@@ -11,4 +11,5 @@ public class LoginResponse {
     private Integer userId; // loginId가 아니라 pk user_id
     private String nickname;
     private Integer honbabLevel;
+    private boolean isNewUser;
 }
