@@ -78,8 +78,8 @@ public class RestaurantService {
             List<RestaurantListResponse.RestReviewTag> restReviewTagList = new ArrayList<>();
 
             if(top4SelectedReviewTag != null && !top4SelectedReviewTag.isEmpty()) {
-                int limit = Math.min(2, top4SelectedReviewTag.size());
-                for(int i=1; i< limit; i++) {
+                int limit = Math.min(3, top4SelectedReviewTag.size());
+                for(int i=1; i <= limit; i++) {
                     RestaurantListResponse.RestReviewTag reviewTag
                             = new RestaurantListResponse.RestReviewTag
                             (top4SelectedReviewTag.get(i-1).getTagId(), top4SelectedReviewTag.get(i-1).getTagName());
