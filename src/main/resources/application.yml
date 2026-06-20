@@ -1,35 +1,33 @@
+server:
+  address: 0.0.0.0
+  port: 8080
+
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:honbabmap;DB_CLOSE_DELAY=-1
-    username: admin
-    password: 1234
+    url: jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
 
   h2:
     console:
-      enabled: true
-      path: /h2-console # 접속 경로 url 지정
+      enabled: false
 
-  # data.sql 파일을 읽어서 초기 데이터를 자동으로 집어넣는 설정
   sql:
     init:
-      mode: always # 서버가 켜질 때마다 sql 파일을 항상 실행함
-      encoding: UTF-8 # 한글 데이터 깨짐 방지
+      mode: never
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create-drop # 서버가 꺼지고 다시 켜졌을 때 테이블을 처음부터 만듦.
-      # create # 서버를 생성할 때마다 테이블 생성
-      # update: 엔티티에 맞춰 테이블 업데이트, 기존 데이터는 삭제 안 함.
+      ddl-auto: create
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         show_sql: true
+
 jwt:
   secret: kmuddwuprojecthonbabmapsecretkey
-  expire-length: 3600000 # 단위: 밀리 초, 3600000ms = 1 hour
-server:
-  port: 8080 # default port
+  expire-length: 3600000
