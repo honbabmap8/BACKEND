@@ -46,6 +46,8 @@ public class RestaurantListResponse {
     public static class LocationInfo {
         private Integer stationId;
         private String stationName;
+        private double restLat;
+        private double restLng;
         private double distance;
         private Integer time;
     }

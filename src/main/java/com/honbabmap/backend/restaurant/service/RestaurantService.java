@@ -69,7 +69,7 @@ public class RestaurantService {
                 continue;
             RestaurantListResponse.LocationInfo locationInfo
                     = new RestaurantListResponse.LocationInfo
-                    (station.getStationId(), station.getStationName(),
+                    (station.getStationId(), station.getStationName(), restaurant.getRestaurantLat(), restaurant.getRestaurantLng(),
                             restaurant.getDistance(), (int) (restaurant.getDistance() / 100));
 
             // 리뷰태그
@@ -117,6 +117,7 @@ public class RestaurantService {
         RestaurantDetailResponse.LocationInfo locationInfo
                 = new RestaurantDetailResponse.LocationInfo
                 (restaurant.getStation().getStationId(), restaurant.getStation().getStationName(),
+                        restaurant.getRestaurantLat(), restaurant.getRestaurantLng(),
                         restaurant.getDistance(), (int) (restaurant.getDistance() / 100));
 
         // 메인 브랜치에 있던 실제 구현된 리뷰태그 로직을 유지
