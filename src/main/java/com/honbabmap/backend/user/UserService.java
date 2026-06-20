@@ -6,7 +6,6 @@ import com.honbabmap.backend.user.dto.LoginRequest;
 import com.honbabmap.backend.user.dto.LoginResponse;
 import com.honbabmap.backend.user.dto.MyPageResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -54,7 +53,7 @@ public class UserService {
 
         // 비밀번호 일치 여부 확인
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
         // JWT 토큰 생성
