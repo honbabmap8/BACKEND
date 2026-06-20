@@ -2,6 +2,7 @@ package com.honbabmap.backend.global.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -20,5 +21,14 @@ public class GlobalExceptionHandler {
 
         // 프론트엔드 명세서에 맞게 404 Not Found 상태 코드로 반환
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handleBadCredentialsException(BadCredentialsException e) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", e.getMessage());
+
+        // 비밀번호 불일치 등 인증 실패 시 명세서에 맞게 401 Unauthorized 코드로 반환합니다.
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 }
