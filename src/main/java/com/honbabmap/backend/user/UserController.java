@@ -38,6 +38,9 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<MyPageResponse> getMyPageInfo(@AuthenticationPrincipal UserDetails userDetails) {
 
+        if (userDetails == null) {
+            throw new IllegalArgumentException("로그인이 필요한 서비스입니다.");
+        }
         String loginId = userDetails.getUsername();
         MyPageResponse response = userService.getMyPageInfo(loginId);
 

@@ -73,7 +73,6 @@ public class UserService {
             UserEntity user = userRepository.findByLoginId(loginId)
                     .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
 
-
             return new MyPageResponse(
                     user.getUserId(),
                     user.getNickname(),

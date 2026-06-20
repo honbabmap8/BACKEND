@@ -30,7 +30,7 @@ public class RestaurantController {
         else loginId = null; // 비로그인 사용자인 경우 loginId는 null
 
         RestaurantListResponse response
-                = restaurantService.getRestaurantListByStation(loginId, stationId);
+                = restaurantService.getRestaurantListByStation(loginId, stationId );
 
         return ResponseEntity.ok(response);
     }

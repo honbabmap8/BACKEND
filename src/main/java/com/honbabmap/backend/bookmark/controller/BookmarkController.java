@@ -22,7 +22,7 @@ public class BookmarkController {
     @PostMapping("/restaurants/{restaurantId}/bookmarks")
     public ResponseEntity<BookmarkResponse> addBookmark(
             @PathVariable Integer restaurantId,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @io.swagger.v3.oas.annotations.Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
 
         // userDetails.getUsername() 대신 데이터베이스에 있는 실제 아이디를 강제로 입력
         // String testLoginId = "jaehyeok";
@@ -40,7 +40,7 @@ public class BookmarkController {
     @DeleteMapping("/restaurants/{restaurantId}/bookmarks")
     public ResponseEntity<BookmarkResponse> removeBookmark(
             @PathVariable Integer restaurantId,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @io.swagger.v3.oas.annotations.Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
 
         // userDetails.getUsername() 대신 데이터베이스에 있는 실제 아이디를 강제로 입력
         // String testLoginId = "jaehyeok";
